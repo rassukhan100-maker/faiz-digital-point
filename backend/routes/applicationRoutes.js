@@ -119,8 +119,7 @@ router.post("/", async (req, res) => {
 
         // QR points to the public status page.
         const statusUrl =
-            `${req.protocol}://${req.get("host")}/status.html?token=${encodeURIComponent(tokenNumber)}`;
-
+            `https://faiz-digital-point.onrender.com/status.html?token=${encodeURIComponent(tokenNumber)}`;
         const qrCodeDataUrl = await QRCode.toDataURL(statusUrl, {
             errorCorrectionLevel: "H",
             width: 350,

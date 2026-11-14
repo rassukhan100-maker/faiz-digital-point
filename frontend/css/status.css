@@ -1,0 +1,143 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #edf3fc;
+    padding: 20px;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #102d5b;
+}
+
+.status-card {
+    width: 100%;
+    max-width: 480px;
+    background: white;
+    border-radius: 16px;
+    padding: 32px 25px;
+    text-align: center;
+    box-shadow: 0 10px 35px rgba(15, 43, 86, 0.1);
+}
+
+.status-logo {
+    width: 105px;
+    height: 85px;
+    object-fit: contain;
+    margin-bottom: 10px;
+}
+
+.status-card h1 {
+    font-size: 22px;
+    font-weight: 900;
+}
+
+.subtitle {
+    margin-top: 6px;
+    color: #58749e;
+    font-size: 13px;
+    font-style: italic;
+}
+
+.line {
+    height: 3px;
+    width: 65px;
+    background: #1558b5;
+    margin: 22px auto;
+    border-radius: 5px;
+}
+
+.status-card h2 {
+    font-size: 21px;
+    margin-bottom: 22px;
+}
+
+.token-box {
+    padding: 17px;
+    border-radius: 10px;
+    background: #e8f1ff;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.token-box span {
+    font-size: 12px;
+    color: #607695;
+}
+
+.token-box strong {
+    font-size: 24px;
+    color: #124e9e;
+}
+
+.type-box {
+    margin: 15px 0;
+    padding: 14px;
+    border: 1px solid #dce6f4;
+    border-radius: 9px;
+    font-size: 13px;
+}
+
+.status-result {
+    padding: 23px 15px;
+    border-radius: 12px;
+}
+
+.status-result.completed {
+    background: #e7f7ed;
+    color: #137844;
+}
+
+.status-result.pending {
+    background: #fff4df;
+    color: #9a6200;
+}
+
+.status-icon {
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto 12px;
+    background: white;
+    border-radius: 50%;
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.status-result h3 {
+    font-size: 15px;
+    margin-bottom: 8px;
+}
+
+.status-result p {
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+.updated-text {
+    margin-top: 18px;
+    font-size: 11px;
+    color: #71809a;
+}
+
+.error-box {
+    background: #ffebeb;
+    color: #b32626;
+    padding: 16px;
+    border-radius: 8px;
+    font-size: 13px;
+}
+
+footer {
+    margin-top: 30px;
+    font-size: 11px;
+    color: #8491a5;
+}

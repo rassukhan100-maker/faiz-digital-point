@@ -13,18 +13,213 @@ document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("adminName").textContent =
         adminName || "Admin";
 
-
     const form = document.getElementById("applicationForm");
     const table = document.getElementById("applicationsTable");
     const message = document.getElementById("formMessage");
     const saveBtn = document.getElementById("saveBtn");
+    const courseSelect = document.getElementById("course");
 
     let applications = [];
     let editingId = null;
 
+    // Complete course list from your supplied images.
+    const courses = [
+        "B Tech Computer Science and Engineering Cyber Security",
+        "B.TECH/B.E. (Dairy Technology)",
+        "Bachelor of Journalism and Mass Communication",
+        "B.Sc. Anaesthesia Technology",
+        "Bachelor of Architecture",
+        "Bachelor of Arts & Bachelor of Laws (Integrated)",
+        "Bachelor of Arts (Honours) Economics",
+        "Bachelor of Arts (Honours) English",
+        "Bachelor of Arts (Honours) History",
+        "Bachelor of Arts (Honours) Political Science",
+        "Bachelor of Arts Honours (Applied Psychology)",
+        "B.A. (Honours) Psychology",
+        "B.A. (Honours) Sociology",
+        "Bachelor of Business Administration",
+        "BBA + LLB (Hons.) (Integrated)",
+        "BBA Business Analytics",
+        "B.B.A. Financial Market",
+        "BBA Logistics and Supply Chain Management",
+        "Bachelor of Commerce (Honours)",
+        "B.Com(H) + ACCA (International Accounting & Finance)",
+        "Bachelor of Computer Applications",
+        "Bachelor of Design",
+        "Bachelor in Interior Design",
+        "B.Sc. Renal Dialysis Technology",
+        "Bachelor of Education",
+        "Bachelor in Hotel Management and Catering Technology",
+        "Bachelor of Laws",
+        "B.M.L.T (Bachelor of Medical Laboratory Technology)",
+        "Bachelors in Medical Laboratory Science",
+        "Bachelor of Science in Radiology & Imaging Technology",
+        "Bachelor of Medicine and Bachelor of Surgery",
+        "Bachelor of Science (Human Nutrition)",
+        "Bachelor of Occupational Therapy 4Yrs",
+        "Bachelor in Optometry",
+        "Bachelor of Pharmacy",
+        "Bachelor of Physiotherapy 4yrs",
+        "B.Sc. in Respiratory Care Technology",
+        "B.Sc. (Honours) Physics",
+        "Bachelor of Science (Agriculture)",
+        "B.Sc. Biochemistry",
+        "Bachelor of Science (Biotechnology)",
+        "B.Sc. Botany",
+        "B.Sc. (Honours) Chemistry",
+        "B.Sc. (Microbiology, Environmental Science, Biochemistry)",
+        "B.Sc. (Hons) Environmental Science (Single Subject)",
+        "B.Sc. (Industrial Chemistry)",
+        "B.Sc. Life Sciences",
+        "B.Sc. (Maths)",
+        "B.Sc. (Physics, Mathematics, Computer Science)",
+        "B.Sc. (Physics, Mathematics, Chemistry)",
+        "B.Sc. (Physics, Mathematics, Electronics)",
+        "B.Sc. (Statistics)",
+        "B.Sc. Zoology",
+        "B.Sc. Cardiovascular Technology",
+        "B.Sc. (Forensic Science)",
+        "B.Sc. in Medical Anatomy",
+        "B.Sc. Medical Biochemistry",
+        "Bachelor of Science (Medical Microbiology)",
+        "Bachelor of Science (Nursing)",
+        "Bachelor of Technology (Agricultural Engineering)",
+        "Bachelor of Technology (Biomedical Engineering)",
+        "B.Tech Biotechnology Engineering",
+        "Bachelor of Technology (Civil Engineering)",
+        "Bachelor of Technology (Computer Science & Engineering)",
+        "B.Tech in Artificial Intelligence and Machine Learning",
+        "B.Tech in Computer Science and Engineering (Artificial Intelligence)",
+        "B.Tech-CSE Cloud Computing (In association with Google)",
+        "B.Tech in Data Science and Artificial Intelligence",
+        "Bachelor of Technology (Electrical Engineering)",
+        "Bachelor of Technology (Electronics & Communication)",
+        "Bachelor of Technology (Food Technology)",
+        "Bachelor of Technology (Mechanical Engineering)",
+        "B Tech Electrical and Computer Engineering",
+        "Diploma in Modern Arabic",
+        "Diploma in Architecture Engineering",
+        "Diploma in Civil Engineering",
+        "Diploma in Communication and Computer Networking",
+        "Diploma in Computer Science & Engg.",
+        "D.E.C.C.",
+        "Diploma in Electrical",
+        "Diploma in Electronics Engineering",
+        "Diploma in Elementary Education (Approval Attached)",
+        "Diploma in Mechanical Engg.",
+        "Diploma in Automobile Engineering",
+        "Diploma in Pharmacy",
+        "Diploma in Urdu Language",
+        "Doctor of Philosophy",
+        "M.Tech (Computer Science & Engineering)",
+        "M.Tech Electrical Engg.",
+        "Master of Urban & Regional Planning (MURP)",
+        "Master of Architecture",
+        "Master of Art (Clinical Psychology)",
+        "Master of Arts (Economics)",
+        "M.A. (English)",
+        "Master of Arts (History)",
+        "MA International Relations",
+        "Master of Arts (Political Science)",
+        "Master of Arts (Applied Psychology)",
+        "Master of Arts (Psychology)",
+        "M.A. Public Administration",
+        "Master of Arts (Sociology)",
+        "Master of Business Administration",
+        "Master of Business Administration (Hospital and Healthcare Management)",
+        "MBA Logistics and Supply Chain Management 2 Yrs",
+        "Master of Tourism and Travel Management",
+        "Master of Business Administration (Agribusiness)",
+        "Master of Commerce",
+        "Master of Computer Application 2yrs",
+        "Master of Education",
+        "Master of Hospital Administration",
+        "Master of Laws",
+        "LL.M. (International & Comparative Law)",
+        "M.Sc. in Medical Laboratory Technology",
+        "MSc Medical Imaging Technology",
+        "Master of Science (Nutrition and Health)",
+        "Master of Optometry",
+        "Master of Pharmacy (Pharmaceutical Chemistry)",
+        "Master of Pharmacy (Pharmaceutics)",
+        "Master of Pharmacy (Pharmacology)",
+        "M.Pharm in Pharmacy Practice",
+        "Master in Public Health",
+        "Master of Science (Agronomy)",
+        "Master of Science (Agriculture)",
+        "Master of Science (Biochemistry)",
+        "Master of Science (Biotechnology)",
+        "Master of Science (Chemistry)",
+        "Master of Science (Clinical Psychology)",
+        "M.Sc Data Science",
+        "Master of Science (Environmental Science)",
+        "M.Sc in Forensic Science",
+        "Master of Science (Industrial Chemistry)",
+        "Master of Science (Mathematics)",
+        "Master of Science (Medical Anatomy)",
+        "M.Sc Medical Biochemistry",
+        "Master of Science (Medical Microbiology)",
+        "Master of Science (Medical Pharmacology)",
+        "Master of Science (Medical Physiology)",
+        "Master of Science (Microbiology)",
+        "Master of Science (Nursing)",
+        "Master of Science (Physics)",
+        "Master of Science (Statistics)",
+        "Master of Social Work",
+        "Master of Technology Civil Engg.",
+        "M.Tech (Environmental Science & Engineering)",
+        "M.Tech (Structural Engineering)",
+        "M.Tech in CSE (Specialization: Data Science)",
+        "Master of Technology (Biotechnology)",
+        "M.Tech Electronics & Communication Engg.",
+        "M.Tech. in Food Technology",
+        "Master of Technology (Mechanical Engineering)",
+        "M.Tech (Production & Industrial Engineering)",
+        "M.Tech (Specialization in Intelligent Systems and Robotics)",
+        "Master in Physiotherapy",
+        "Doctor of Medicine",
+        "Master of Surgery",
+        "Doctor of Pharmacy",
+        "Pharm. D. (Post Baccalaureate)",
+        "Post Basic B.Sc. Nursing",
+        "Post Graduate Diploma in Educational Administration",
+        "Post Graduate Diploma in Guidance and Counselling",
+        "Post Graduate Diploma in Print Journalism (Hindi / English)",
+        "Post Graduate Diploma in Disaster Management"
+    ];
+
+    // Populate course dropdown.
+    function populateCourses(selectedCourse = "") {
+
+        courseSelect.innerHTML =
+            '<option value="">Select Course</option>';
+
+        courses.forEach(course => {
+            const option = document.createElement("option");
+            option.value = course;
+            option.textContent = course;
+            courseSelect.appendChild(option);
+        });
+
+        // Preserve old records whose course is not in the new list.
+        if (
+            selectedCourse &&
+            !courses.includes(selectedCourse)
+        ) {
+            const oldOption = document.createElement("option");
+            oldOption.value = selectedCourse;
+            oldOption.textContent = selectedCourse + " (Existing Record)";
+            courseSelect.appendChild(oldOption);
+        }
+
+        courseSelect.value = selectedCourse;
+    }
+
+    populateCourses();
 
     // Set today's date by default.
     const today = new Date();
+
     const localToday = [
         today.getFullYear(),
         String(today.getMonth() + 1).padStart(2, "0"),
@@ -32,7 +227,6 @@ document.addEventListener("DOMContentLoaded", () => {
     ].join("-");
 
     document.getElementById("applicationDate").value = localToday;
-
 
     async function apiRequest(url, options = {}) {
 
@@ -60,7 +254,6 @@ document.addEventListener("DOMContentLoaded", () => {
         return data;
     }
 
-
     function escapeHTML(value) {
         return String(value ?? "").replace(/[&<>"']/g, char => ({
             "&": "&amp;",
@@ -70,7 +263,6 @@ document.addEventListener("DOMContentLoaded", () => {
             "'": "&#39;"
         })[char]);
     }
-
 
     function formatDate(value) {
         if (!value) return "-";
@@ -82,12 +274,10 @@ document.addEventListener("DOMContentLoaded", () => {
         return date.toLocaleDateString("en-IN");
     }
 
-
     function showMessage(text, type = "success") {
         message.textContent = text;
         message.className = `message ${type}`;
     }
-
 
     async function loadApplications() {
 
@@ -110,7 +300,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-
     function updateStats() {
 
         document.getElementById("totalCount").textContent =
@@ -122,7 +311,6 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("pendingCount").textContent =
             applications.filter(a => a.status !== "Completed").length;
     }
-
 
     function renderApplications() {
 
@@ -141,7 +329,6 @@ document.addEventListener("DOMContentLoaded", () => {
             );
         });
 
-
         if (!filtered.length) {
             table.innerHTML = `
                 <tr>
@@ -153,14 +340,12 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         table.innerHTML = filtered.map(app => {
 
             const completed = app.status === "Completed";
 
             return `
                 <tr>
-
                     <td>
                         <strong>${escapeHTML(app.tokenNumber)}</strong>
                     </td>
@@ -177,7 +362,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
                     <td>${formatDate(app.applicationDate)}</td>
 
-                    <td>₹${Number(app.amount || 0).toLocaleString("en-IN")}</td>
+                    <td>
+                        ₹${Number(app.amount || 0).toLocaleString("en-IN")}
+                    </td>
 
                     <td>
                         <span class="status-badge ${completed ? "completed" : "pending"}">
@@ -214,13 +401,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
                         </div>
                     </td>
-
                 </tr>
             `;
 
         }).join("");
     }
-
 
     // SAVE OR UPDATE APPLICATION
     form.addEventListener("submit", async event => {
@@ -228,19 +413,36 @@ document.addEventListener("DOMContentLoaded", () => {
         event.preventDefault();
 
         const payload = {
-            applicationType: document.getElementById("applicationType").value,
-            studentName: document.getElementById("studentName").value.trim(),
-            fatherName: document.getElementById("fatherName").value.trim(),
-            mobile: document.getElementById("mobile").value.trim(),
-            enrollmentNumber: document.getElementById("enrollmentNumber").value.trim(),
-            dateOfBirth: document.getElementById("dateOfBirth").value || null,
-            course: document.getElementById("course").value.trim(),
-            semester: document.getElementById("semester").value.trim(),
-            year: document.getElementById("year").value.trim(),
-            applicationDate: document.getElementById("applicationDate").value,
-            amount: Number(document.getElementById("amount").value)
-        };
+            applicationType:
+                document.getElementById("applicationType").value,
 
+            studentName:
+                document.getElementById("studentName").value.trim(),
+
+            mobile:
+                document.getElementById("mobile").value.trim(),
+
+            enrollmentNumber:
+                document.getElementById("enrollmentNumber").value.trim(),
+
+            dateOfBirth:
+                document.getElementById("dateOfBirth").value || null,
+
+            course:
+                courseSelect.value,
+
+            semester:
+                document.getElementById("semester").value.trim(),
+
+            year:
+                document.getElementById("year").value.trim(),
+
+            applicationDate:
+                document.getElementById("applicationDate").value,
+
+            amount:
+                Number(document.getElementById("amount").value)
+        };
 
         try {
 
@@ -248,7 +450,6 @@ document.addEventListener("DOMContentLoaded", () => {
             saveBtn.textContent = editingId
                 ? "Updating..."
                 : "Saving...";
-
 
             let result;
 
@@ -268,7 +469,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
             }
 
-
             showMessage(
                 `${result.message} Token: ${result.application.tokenNumber}`,
                 "success"
@@ -277,6 +477,7 @@ document.addEventListener("DOMContentLoaded", () => {
             editingId = null;
 
             form.reset();
+            populateCourses();
             document.getElementById("applicationDate").value = localToday;
 
             saveBtn.textContent = "Save Application";
@@ -297,20 +498,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 
-
     // SEARCH
     document.getElementById("searchInput")
         .addEventListener("input", renderApplications);
 
-
     // LOGOUT
     document.getElementById("logoutBtn").addEventListener("click", () => {
-
         sessionStorage.clear();
         window.location.href = "/";
-
     });
-
 
     // TABLE ACTIONS
     table.addEventListener("click", async event => {
@@ -326,12 +522,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (!app) return;
 
-
         if (action === "print") {
             printApplication(app);
             return;
         }
-
 
         if (action === "status") {
 
@@ -355,7 +549,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         if (action === "delete") {
 
             if (!confirm(`Delete application ${app.tokenNumber}?`)) {
@@ -377,7 +570,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         if (action === "edit") {
 
             editingId = id;
@@ -388,9 +580,6 @@ document.addEventListener("DOMContentLoaded", () => {
             document.getElementById("studentName").value =
                 app.studentName || "";
 
-            document.getElementById("fatherName").value =
-                app.fatherName || "";
-
             document.getElementById("mobile").value =
                 app.mobile || "";
 
@@ -398,10 +587,11 @@ document.addEventListener("DOMContentLoaded", () => {
                 app.enrollmentNumber || "";
 
             document.getElementById("dateOfBirth").value =
-                app.dateOfBirth ? String(app.dateOfBirth).slice(0, 10) : "";
+                app.dateOfBirth
+                    ? String(app.dateOfBirth).slice(0, 10)
+                    : "";
 
-            document.getElementById("course").value =
-                app.course || "";
+            populateCourses(app.course || "");
 
             document.getElementById("semester").value =
                 app.semester || "";
@@ -420,11 +610,9 @@ document.addEventListener("DOMContentLoaded", () => {
             saveBtn.textContent = "Update Application";
 
             window.scrollTo({ top: 0, behavior: "smooth" });
-
         }
 
     });
-
 
     // PRINT BOTH SLIPS SIDE BY SIDE
     function printApplication(app) {
@@ -437,7 +625,6 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const printWindow = window.open("", "_blank");
 
         if (!printWindow) {
@@ -445,24 +632,15 @@ document.addEventListener("DOMContentLoaded", () => {
             return;
         }
 
-
         const logoURL = `${window.location.origin}/assets/logo.png`;
-
         const safe = escapeHTML;
 
-        const statusText = app.status === "Completed"
-            ? "Completed"
-            : "Uncompleted";
-
         const yearText = app.year || app.semester || "-";
-
         const dateText = formatDate(app.applicationDate);
-
         const dobText = formatDate(app.dateOfBirth);
 
         const amountText =
             `₹ ${Number(app.amount || 0).toLocaleString("en-IN")} /-`;
-
 
         const printHTML = `
 <!DOCTYPE html>
@@ -716,7 +894,7 @@ body {
     }
 }
 
-/* 112mm wide thermal roll: both copies remain side-by-side. */
+/* 112mm thermal roll */
 @media print and (max-width: 120mm) {
     @page {
         size: 112mm 80mm;
@@ -839,62 +1017,49 @@ body {
 <div class="sheet">
 
     <!-- STUDENT COPY -->
-
     <section class="slip student-slip">
 
         <header class="header">
-
             <img class="logo" src="${logoURL}" alt="FDP Logo">
 
             <div class="brand">
                 <h1>FAIZ DIGITAL POINT</h1>
                 <p>Your Digital Service Partner</p>
             </div>
-
         </header>
-
 
         <div class="section-title">
             STUDENT APPLICATION TOKEN
         </div>
-
 
         <div class="token-box">
             Token No. :
             <strong>${safe(app.tokenNumber)}</strong>
         </div>
 
-
         <div class="type-box">
-            ${safe(app.applicationType.toUpperCase())} APPLICATION
+            ${safe((app.applicationType || "").toUpperCase())} APPLICATION
         </div>
-
 
         <div class="qr-area">
             <img src="${app.qrCodeDataUrl}" alt="Student QR Code">
         </div>
 
-
         <div class="scan-text">
             Scan to Check Application Status
         </div>
-
 
         <div class="student-footer">
             Keep this slip safe for future reference.
         </div>
 
         <div class="bottom-wave"></div>
-
     </section>
 
-
     <!-- OFFICE COPY -->
-
     <section class="slip office-slip">
 
         <header class="header">
-
             <img class="logo" src="${logoURL}" alt="FDP Logo">
 
             <div class="brand">
@@ -905,20 +1070,16 @@ body {
             <div class="office-label">
                 OFFICE<br>COPY
             </div>
-
         </header>
-
 
         <div class="section-title">
             STUDENT APPLICATION RECORD
         </div>
 
-
         <div class="token-box">
             Token No. :
             <strong>${safe(app.tokenNumber)}</strong>
         </div>
-
 
         <table class="details">
 
@@ -935,11 +1096,6 @@ body {
             <tr>
                 <td>Registration No. :</td>
                 <td>${safe(app.enrollmentNumber)}</td>
-            </tr>
-
-            <tr>
-                <td>Father Name :</td>
-                <td>${safe(app.fatherName || "-")}</td>
             </tr>
 
             <tr>
@@ -974,17 +1130,14 @@ body {
 
         </table>
 
-
         <div class="office-note">
             ● &nbsp; For Office Records Only
         </div>
 
         <div class="bottom-wave"></div>
-
     </section>
 
 </div>
-
 
 <script>
 
@@ -1000,18 +1153,14 @@ window.addEventListener("load", function () {
             }
 
             return new Promise(resolve => {
-
                 image.addEventListener("load", resolve, { once: true });
                 image.addEventListener("error", resolve, { once: true });
-
             });
 
         })
     ).then(() => {
-
         window.focus();
         window.print();
-
     });
 
 });
@@ -1026,13 +1175,10 @@ window.addEventListener("afterprint", function () {
 </html>
 `;
 
-
         printWindow.document.open();
         printWindow.document.write(printHTML);
         printWindow.document.close();
-
     }
-
 
     // Initial load
     loadApplications();

@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>FAIZ DIGITAL POINT | Dashboard</title>
-
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
-
 <body>
 
 <header class="topbar">
     <div class="brand">
         <img src="assets/logo.png" alt="FDP Logo"
              onerror="this.style.display='none'">
-
         <div>
             <h2>FAIZ DIGITAL POINT</h2>
             <p>Your Digital Service Partner</p>
@@ -28,7 +24,6 @@
     </div>
 </header>
 
-
 <main class="container">
 
     <section class="welcome-section">
@@ -38,29 +33,22 @@
         </div>
     </section>
 
-
     <section class="stats-grid">
-
         <div class="stat-card">
             <span>Total Applications</span>
             <h2 id="totalCount">0</h2>
         </div>
-
         <div class="stat-card">
             <span>Uncompleted</span>
             <h2 id="pendingCount">0</h2>
         </div>
-
         <div class="stat-card">
             <span>Completed</span>
             <h2 id="completedCount">0</h2>
         </div>
-
     </section>
 
-
     <section class="panel">
-
         <div class="panel-heading">
             <div>
                 <h2>New Student Application</h2>
@@ -68,14 +56,11 @@
             </div>
         </div>
 
-
         <form id="applicationForm">
-
             <div class="form-grid">
 
                 <div class="field">
                     <label>Application Type *</label>
-
                     <select id="applicationType" required>
                         <option value="">Select Type</option>
                         <option value="Fresh">Fresh</option>
@@ -83,30 +68,20 @@
                     </select>
                 </div>
 
-
                 <div class="field">
                     <label>Student Name *</label>
                     <input id="studentName" type="text" required>
                 </div>
-
-
-                <div class="field">
-                    <label>Father Name</label>
-                    <input id="fatherName" type="text">
-                </div>
-
 
                 <div class="field">
                     <label>Enrollment Number *</label>
                     <input id="enrollmentNumber" type="text" required>
                 </div>
 
-
                 <div class="field">
                     <label>Date of Birth</label>
                     <input id="dateOfBirth" type="date">
                 </div>
-
 
                 <div class="field">
                     <label>Mobile Number *</label>
@@ -115,13 +90,12 @@
                            maxlength="10" required>
                 </div>
 
-
                 <div class="field">
                     <label>Course *</label>
-                    <input id="course" type="text" required
-                           placeholder="Example: B.Tech CSE">
+                    <select id="course" required>
+                        <option value="">Loading courses...</option>
+                    </select>
                 </div>
-
 
                 <div class="field">
                     <label>Semester</label>
@@ -129,19 +103,16 @@
                            placeholder="Example: 3rd Semester">
                 </div>
 
-
                 <div class="field">
                     <label>Year</label>
                     <input id="year" type="text"
                            placeholder="Example: 2nd Year">
                 </div>
 
-
                 <div class="field">
                     <label>Application Date *</label>
                     <input id="applicationDate" type="date" required>
                 </div>
-
 
                 <div class="field">
                     <label>Amount (₹) *</label>
@@ -151,26 +122,20 @@
 
             </div>
 
-
             <div class="form-actions">
                 <button type="submit" id="saveBtn" class="primary-btn">
                     Save Application
                 </button>
-
                 <button type="reset" class="secondary-btn">
                     Clear Form
                 </button>
             </div>
-
         </form>
 
         <div id="formMessage" class="message"></div>
-
     </section>
 
-
     <section class="panel">
-
         <div class="panel-heading records-heading">
             <div>
                 <h2>Student Applications</h2>
@@ -183,11 +148,8 @@
                    placeholder="Search token, name or enrollment">
         </div>
 
-
         <div class="table-wrapper">
-
             <table>
-
                 <thead>
                     <tr>
                         <th>Token</th>
@@ -202,25 +164,18 @@
                 </thead>
 
                 <tbody id="applicationsTable">
-
                     <tr>
                         <td colspan="8" class="empty-row">
                             Loading applications...
                         </td>
                     </tr>
-
                 </tbody>
-
             </table>
-
         </div>
-
     </section>
 
 </main>
 
-
 <script src="js/dashboard.js"></script>
-
 </body>
 </html>
